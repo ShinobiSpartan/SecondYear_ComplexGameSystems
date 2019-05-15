@@ -203,9 +203,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 902496087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3343d7868b4424845b3def5d3b7f32f6, type: 3}
+  m_Script: {fileID: 11500000, guid: b82aec8330a035841a460303759ef4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snakeDirection: {x: 0, y: 0, z: 0}
+  moveTimer: 0.4
 --- !u!4 &902496089
 Transform:
   m_ObjectHideFlags: 0
@@ -278,7 +280,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 8f1690ff7e95c37479e4981abe1f7717, type: 2}
+  - {fileID: 2100000, guid: 882b4d068597d7842bdd09596654c619, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -442,7 +444,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: bb427835a62ea124dbc8b346cd544abc, type: 2}
+  - {fileID: 2100000, guid: 1f4a837d4cd75cc44af0b13c38ec6318, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
