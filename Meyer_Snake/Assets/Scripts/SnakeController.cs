@@ -2,49 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeController : MonoBehaviour {
+public class SnakeController : MonoBehaviour
+{
+    private Vector2 snakePos;
+    private Vector2 snakeDir;
 
-    [SerializeField]
-    private Vector3 snakeDirection;
+    private float moveTimer;
+    private float moveTimerMax;
 
-    public float moveTimer = 1.0f;
-    private float timer = 0.0f;
+    void Awake()
+    {
+        // Start the Snake in the centre of the screen
+        snakePos = new Vector2(10, 10);
+        // Snake starts facing right
+        snakeDir = new Vector2(1, 0);
 
-	// Use this for initialization
-	void Start () {
-        snakeDirection = transform.right;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        timer += Time.deltaTime;
+        // Set default move timer to 1 second        
+        moveTimerMax = 0.25f;
+        moveTimer = moveTimerMax;
+    }
 
-        if(timer > moveTimer)
+    void Update()
+    {
+        SnakeInput();
+        SnakeMovement();
+    }
+
+    private void SnakeInput()
+    {
+        // Change direction to UP
+        if (Input.GetKeyDown(KeyCode.UpArrow) && snakeDir.y != -1)
         {
-            transform.position += snakeDirection;
-            timer = 0;
+            snakeDir = new Vector2(0, 1);
         }
 
-		if(Input.GetKeyDown(KeyCode.RightArrow) && snakeDirection != -transform.right)
+        // Change direction to DOWN
+        if (Input.GetKeyDown(KeyCode.DownArrow) && snakeDir.y != 1)
         {
-            snakeDirection = transform.right;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && snakeDirection != transform.right)
-        {
-            snakeDirection = -transform.right;
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow) && snakeDirection != -transform.up)
-        {
-            snakeDirection = transform.up;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow) && snakeDirection != transform.up)
-        {
-            snakeDirection = -transform.up;
+            snakeDir = new Vector2(0, -1);
         }
 
-        if (transform.position.x >= 5 || transform.position.x >= -5 || transform.position.y <= 5 || transform.position.y >= -5)
+        // Change direction to RIGHT
+        if (Input.GetKeyDown(KeyCode.RightArrow) && snakeDir.x != -1)
         {
-            
+            snakeDir = new Vector2(1, 0);
+        }
+
+        // Change direction to LEFT
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && snakeDir.x != 1)
+        {
+            snakeDir = new Vector2(-1, 0);
         }
     }
+
+    private void SnakeMovement()
+    {
+        moveTimer += Time.deltaTime;
+        if (moveTimer >= moveTimerMax)
+        {
+            snakePos += snakeDir;
+            moveTimer -= moveTimerMax;
+
+            transform.position = new Vector3(snakePos.x, snakePos.y);
+        }
+
+    }
 }
+
