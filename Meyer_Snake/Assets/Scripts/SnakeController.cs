@@ -28,6 +28,7 @@ public class SnakeController : MonoBehaviour
         SnakeMovement();
     }
 
+    // Controls all of the input and directions for the Snake
     private void SnakeInput()
     {
         // Change direction to UP
@@ -55,6 +56,7 @@ public class SnakeController : MonoBehaviour
         }
     }
 
+    // Deals with the actual movement of the Snake
     private void SnakeMovement()
     {
         moveTimer += Time.deltaTime;
