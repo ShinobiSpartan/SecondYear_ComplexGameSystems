@@ -152,10 +152,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 120465367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6e999d8d3a889549af979ba6d1b3fd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 82d8ff87a8954d84983b58175d5451f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeHeadSprite: {fileID: 21300000, guid: 0ba6eacafb5789b4b93c7a75aaeca5e2, type: 3}
+  headSprite: {fileID: 21300000, guid: f9ed846c55bbe7045bc1b5bc3acecc29, type: 3}
+  bodySprite: {fileID: 21300000, guid: f9ed846c55bbe7045bc1b5bc3acecc29, type: 3}
+  foodSprite: {fileID: 21300000, guid: 0981b38b69ec408418611b23e2d2a8bc, type: 3}
 --- !u!1 &1186094630
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +194,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.35488605, g: 0.42133385, b: 0.5188679, a: 0}
+  m_BackGroundColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -248,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1197127024}
   - component: {fileID: 1197127023}
+  - component: {fileID: 1197127025}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Untagged
@@ -292,12 +295,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0ba6eacafb5789b4b93c7a75aaeca5e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9ed846c55bbe7045bc1b5bc3acecc29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.14, y: 1.14}
+  m_Size: {x: 5.13, y: 5.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -317,6 +320,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1197127025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197127022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f684eddff4a78384d9d93475c1c423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1697057484
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,8 +386,8 @@ SpriteRenderer:
   m_SortingLayerID: 994938557
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c843b5dc9a592c3419470215614a6616, type: 3}
-  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5ee5f515cbe16844892bbd86ac7f43bc, type: 3}
+  m_Color: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -439,6 +454,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1984814923}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eae09226e88f4d40afb12258441f581, type: 3}
+  m_Script: {fileID: 11500000, guid: e616e78cba0709e4aa9c5a7b8bf08dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snake: {fileID: 1197127025}

@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private SnakeController snake;
+    private MapGrid mapGrid;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject snakeHeadGameObject = new GameObject();
-        SpriteRenderer snakeSpriteRenderer = snakeHeadGameObject.AddComponent<SpriteRenderer>();
-        snakeSpriteRenderer.sprite = GameAssets.instance.snakeHeadSprite;
-    }
+        mapGrid = new MapGrid(20, 20);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        snake.Setup(mapGrid);
+        mapGrid.Setup(snake);
     }
 }
