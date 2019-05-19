@@ -178,7 +178,7 @@ public class SnakeController : MonoBehaviour
 
         public SnakeBodyPart(int bodyIndex)
         {
-            GameObject snakeBodyObject = new GameObject("SnakeBody", typeof(SpriteRenderer));
+            GameObject snakeBodyObject = new GameObject("SnakeBody", typeof(SpriteRenderer), typeof(BoxCollider2D));
             snakeBodyObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.bodySprite;
             snakeBodyObject.GetComponent<SpriteRenderer>().sortingOrder = -bodyIndex;
             transform = snakeBodyObject.transform;
