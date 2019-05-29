@@ -47,8 +47,8 @@ public class NodeGrid : MonoBehaviour
          for (int x = -1; x <= 1; x++)
          {
             for (int y = -1; y <= 1; y++)
-            {
-                if (x == 0 && y == 0)
+            {     // Centre                Bottom Left             Top Left               Top Right             Bottom Right
+                if ((x == 0 && y == 0) || (x == -1 && y == -1) || (x == -1 && y == 1) || (x == 1 && y == 1) || (x == 1 && y == -1))
                     continue;
 
                 int checkX = node.gridX + x;
