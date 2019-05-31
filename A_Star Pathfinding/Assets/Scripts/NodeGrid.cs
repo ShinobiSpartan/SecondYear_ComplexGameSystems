@@ -12,6 +12,8 @@ public class NodeGrid : MonoBehaviour
     float nodeDiameter;
     int gridSizeX, gridSizeY;
 
+    public List<Node> path;
+
     private void Start()
     {
         nodeDiameter = nodeRadius * 2;
@@ -76,7 +78,7 @@ public class NodeGrid : MonoBehaviour
 
     }
 
-    public List<Node> path;
+   
 
     private void OnDrawGizmos()
     {
