@@ -23,6 +23,10 @@ public class NodeGrid : MonoBehaviour
 
         CreateGrid();
     }
+    private void Update()
+    {
+        CreateGrid();
+    }
 
     void CreateGrid()
     {
@@ -41,6 +45,7 @@ public class NodeGrid : MonoBehaviour
             }
         }
     }
+
 
     public List<Node> GetNeighbours(Node node)
     {
