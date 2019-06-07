@@ -31,8 +31,9 @@ public class MapGrid
             foodPos = new Vector2Int(Random.Range(-(width / 2), (width / 2)), Random.Range(-(height / 2), (height / 2)));
         } while (snake.GetFullSnakePositionList().IndexOf(foodPos) != -1);
 
-        foodObject = new GameObject("Food", typeof(SpriteRenderer));
+        foodObject = new GameObject("Food", typeof(SpriteRenderer), typeof(BoxCollider2D));
         foodObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
+        foodObject.tag = "Food";
         foodObject.transform.position = new Vector3(foodPos.x, foodPos.y);
     }
 

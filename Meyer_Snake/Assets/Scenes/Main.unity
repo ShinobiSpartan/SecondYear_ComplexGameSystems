@@ -250,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1197127024}
   - component: {fileID: 1197127023}
+  - component: {fileID: 1197127026}
   - component: {fileID: 1197127025}
   m_Layer: 0
   m_Name: Snake
@@ -332,7 +333,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab12758bc9c6b14cb9835b9e1241ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerControlled: 0
+  isAIControlled: 1
+--- !u!61 &1197127026
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197127022}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.14, y: 1.14}
+    newSize: {x: 1.14, y: 1.14}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1697057484
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +449,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1984814924}
   - component: {fileID: 1984814925}
+  - component: {fileID: 1984814926}
+  - component: {fileID: 1984814927}
+  - component: {fileID: 1984814928}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -459,3 +489,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snake: {fileID: 1197127025}
+--- !u!114 &1984814926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984814923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e835268ea89ab4e8c5508a6881227f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridWorldSize: {x: 21, y: 21}
+  nodeRadius: 0.5
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &1984814927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984814923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427bd99054f240144bdb259ea87e35af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seeker: {fileID: 1197127024}
+  target: {fileID: 0}
+--- !u!114 &1984814928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984814923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e2ed5b0cf5cad4e9c71df7aa1b4043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snake: {fileID: 1197127025}
+  seeker: {fileID: 1197127022}

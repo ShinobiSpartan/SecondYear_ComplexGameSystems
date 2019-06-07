@@ -13,7 +13,7 @@ public class SnakeController : MonoBehaviour
 
     private State state;
 
-    public bool isPlayerControlled = true;
+    public bool isAIControlled = false;
 
     private Vector2Int snakePos;
     private Vector2Int snakeDir;
@@ -37,7 +37,7 @@ public class SnakeController : MonoBehaviour
 
     void Awake()
     {
-        if(isPlayerControlled)
+        if(!isAIControlled)
         {
             // Start the Snake in the centre of the screen
             snakePos = new Vector2Int(0, 0);
@@ -71,7 +71,7 @@ public class SnakeController : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerControlled)
+        if (!isAIControlled)
         {
             switch (state)
             {
@@ -254,10 +254,11 @@ public class SnakeController : MonoBehaviour
 
         public SnakeBodyPart(int bodyIndex)
         {
-            GameObject snakeBodyObject = new GameObject("SnakeBody", typeof(SpriteRenderer), typeof(BoxCollider2D));
+            GameObject snakeBodyObject = new GameObject("SnakeBody", typeof(BoxCollider2D), typeof(SpriteRenderer));
+            snakeBodyObject.GetComponent<BoxCollider2D>().size = new Vector2(0.9f, 0.9f);
             snakeBodyObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.bodySprite;
-            snakeBodyObject.gameObject.layer = 8;
             snakeBodyObject.GetComponent<SpriteRenderer>().sortingOrder = -bodyIndex;
+            snakeBodyObject.gameObject.layer = 8;
             transform = snakeBodyObject.transform;
         }
 
