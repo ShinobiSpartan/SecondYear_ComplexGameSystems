@@ -28,7 +28,7 @@ public class MapGrid
     private void SpawnFood()
     {
         do {
-            foodPos = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
+            foodPos = new Vector2Int(Random.Range(-(width / 2), (width / 2)), Random.Range(-(height / 2), (height / 2)));
         } while (snake.GetFullSnakePositionList().IndexOf(foodPos) != -1);
 
         foodObject = new GameObject("Food", typeof(SpriteRenderer));
