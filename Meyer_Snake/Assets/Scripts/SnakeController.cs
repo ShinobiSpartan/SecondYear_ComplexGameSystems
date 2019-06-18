@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SnakeController : MonoBehaviour
-{
-
+{ 
+    // Enum to determine the life state of the Snake
     private enum State
     {
         Alive,
@@ -13,23 +13,35 @@ public class SnakeController : MonoBehaviour
 
     private State state;
 
-    public bool isAIControlled = false;
+    // Position of the Snake
+    private Vector2 snakePos;
+    // Direction of the Snake (only for User Playing)
+    private Vector2 snakeDir;
 
-    private Vector2Int snakePos;
-    private Vector2Int snakeDir;
-
+    // Movement delay timer variables
     private float moveTimer;
     private float moveTimerMax;
 
+    // Has an input already been pressed (only for User playing)
     private bool inputQueued = false;
 
+    // Reference to Snake Game Grid script
     private MapGrid mapGrid;
 
+    // Current size of the Snake
     private int currentSnakeSize;
-    private List<Vector2Int> snakePastPositionList;
+    // List for tracking the previous positions of the snake to make sure the tail follows the same path
+    private List<Vector2> snakePastPositionList;
 
+    // List of the Snakes' body parts
     private List<SnakeBodyPart> snakeBodyPartList;
 
+    // Connects the pathfinding NodeGrid script
+    private NodeGrid nodeGrid;
+    // Determines whether the Pathfinding player, or the User does
+    public bool isAIControlled = false;
+
+    // Setup function for the Snake game and Food
     public void Setup(MapGrid mapGrid)
     {
         this.mapGrid = mapGrid;
@@ -37,30 +49,40 @@ public class SnakeController : MonoBehaviour
 
     void Awake()
     {
+        // User Controlled
         if(!isAIControlled)
         {
             // Start the Snake in the centre of the screen
-            snakePos = new Vector2Int(0, 0);
+            snakePos = new Vector2(0, 0);
             // Snake starts facing right
-            snakeDir = new Vector2Int(1, 0);
+            snakeDir = new Vector2(1, 0);
 
             // Set default move timer to 1 second        
             moveTimerMax = 0.15f;
             moveTimer = moveTimerMax;
 
-            snakePastPositionList = new List<Vector2Int>();
+            snakePastPositionList = new List<Vector2>();
             currentSnakeSize = 0;
 
             snakeBodyPartList = new List<SnakeBodyPart>();
 
+            // Set the Snake state to playable
             state = State.Alive;
         }
+        // Pathfinding
         else
         {
             // Start the Snake in the centre of the screen
-            snakePos = new Vector2Int(0, 0);
+            snakePos = new Vector2(0, 0);
 
-            snakePastPositionList = new List<Vector2Int>();
+            // Get reference to pathfinding Node Grid
+            nodeGrid = GameObject.FindGameObjectWithTag("GameController").GetComponent<NodeGrid>();
+
+            // Set default move timer to 1 second        
+            moveTimerMax = 0.15f;
+            moveTimer = moveTimerMax;
+
+            snakePastPositionList = new List<Vector2>();
             currentSnakeSize = 0;
 
             snakeBodyPartList = new List<SnakeBodyPart>();
@@ -71,6 +93,7 @@ public class SnakeController : MonoBehaviour
 
     void Update()
     {
+        // User Controlled
         if (!isAIControlled)
         {
             switch (state)
@@ -83,6 +106,7 @@ public class SnakeController : MonoBehaviour
                     break;
             }
         }
+        // Pathfinding
         else
         {
             switch(state)
@@ -156,23 +180,23 @@ public class SnakeController : MonoBehaviour
 
             foreach (SnakeBodyPart snakeBodyPart in snakeBodyPartList)
             {
-                Vector2Int snakeBodypartGridPosition = snakeBodyPart.GetSnakePosition();
+                Vector2 snakeBodypartGridPosition = snakeBodyPart.GetSnakePosition();
                 if(snakePos == snakeBodypartGridPosition)
                 {
-                    Debug.Log("You dead");
+                    Debug.Log("You died");
                     state = State.Dead;
                 }
             }
 
             if (snakePos.x < -10 || snakePos.x > 10 || snakePos.y < -10 || snakePos.y > 10)
             {
-                Debug.Log("You dead");
+                Debug.Log("You died");
                 state = State.Dead;
             }
 
             for (int i = 0; i < snakePastPositionList.Count; i++)
             {
-                Vector2Int snakePastPosition = snakePastPositionList[i];
+                Vector2 snakePastPosition = snakePastPositionList[i];
             }
 
             transform.position = new Vector3(snakePos.x, snakePos.y);
@@ -181,49 +205,59 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    // Allows the snake to function without player input
+    // Snake movement (Assisted by Pathfinding)
     private void SnakeAI()
     {
-       snakePastPositionList.Insert(0, snakePos);
+        // If path exists..
+        if(nodeGrid.path != null)
+        {
+            // If the path is greater than 0..
+            if(nodeGrid.path.Count > 0)
+            {
+                // Start movement timer
+                moveTimer += Time.deltaTime;
+                // When the timer reaches trhe threshold..
+                if (moveTimer >= moveTimerMax)
+                {
+                    // If the snakes position is not the same as the first position in the path..
+                    if(snakePos != nodeGrid.path[0].worldPosition)
+                    {
+                        // Insert current position into lis of previous positions
+                        snakePastPositionList.Insert(0, snakePos);
+                        // Move the Snake to that position
+                        snakePos = nodeGrid.path[0].worldPosition;
+                    }
 
-       bool foodConsumed = mapGrid.HasSnakeEatenFood(snakePos);
-       if (foodConsumed)
-       {
-           // If food is eaten, grow body
-           currentSnakeSize++;
-           CreateSnakeBodyPart();
-       }
+                    // Check if food has been eaten
+                    bool foodConsumed = mapGrid.HasSnakeEatenFood(snakePos);
+                    if (foodConsumed)
+                    {
+                        // If food is eaten, grow body
+                        currentSnakeSize++;
+                        CreateSnakeBodyPart();
+                    }
 
-       if (snakePastPositionList.Count >= currentSnakeSize + 1)
-       {
-           snakePastPositionList.RemoveAt(snakePastPositionList.Count - 1);
-       }
+                    // Once the the whole snake has moved past a position, remove that position from the list
+                    if (snakePastPositionList.Count >= currentSnakeSize + 1)
+                    {
+                        snakePastPositionList.RemoveAt(snakePastPositionList.Count - 1);
+                    }
 
-       foreach (SnakeBodyPart snakeBodyPart in snakeBodyPartList)
-       {
-           Vector2Int snakeBodypartGridPosition = snakeBodyPart.GetSnakePosition();
-           if (snakePos == snakeBodypartGridPosition)
-           {
-               Debug.Log("You dead");
-               state = State.Dead;
-           }
-       }
+                    // Move the Snake body parts through the list of previous postions
+                    for (int i = 0; i < snakePastPositionList.Count; i++)
+                    {
+                        Vector2 snakePastPosition = snakePastPositionList[i];
+                    }
 
-       if (snakePos.x < -10 || snakePos.x > 10 || snakePos.y < -10 || snakePos.y > 10)
-       {
-           Debug.Log("You dead");
-           state = State.Dead;
-       }
+                    transform.position = new Vector3(snakePos.x, snakePos.y);
 
-       for (int i = 0; i < snakePastPositionList.Count; i++)
-       {
-           Vector2Int snakePastPosition = snakePastPositionList[i];
-       }
+                    UpdateSnakeBodyParts();
 
-       transform.position = new Vector3(snakePos.x, snakePos.y);
+                    moveTimer -= moveTimerMax;
 
-       UpdateSnakeBodyParts();
-       
+                }
+            }
+        }
     }
 
     private void CreateSnakeBodyPart()
@@ -240,16 +274,16 @@ public class SnakeController : MonoBehaviour
     }
 
     // Get the full list of the Snake positions (Head + Body)
-    public List<Vector2Int> GetFullSnakePositionList()
+    public List<Vector2> GetFullSnakePositionList()
     {
-        List<Vector2Int> snakePosList = new List<Vector2Int>() { snakePos };
+        List<Vector2> snakePosList = new List<Vector2>() { snakePos };
         snakePosList.AddRange(snakePastPositionList);
         return snakePosList;
     }
 
     private class SnakeBodyPart
     {
-        private Vector2Int snakePosition;
+        private Vector2 snakePosition;
         private Transform transform;
 
         public SnakeBodyPart(int bodyIndex)
@@ -262,13 +296,13 @@ public class SnakeController : MonoBehaviour
             transform = snakeBodyObject.transform;
         }
 
-        public void SetSnakePosition(Vector2Int snakePos)
+        public void SetSnakePosition(Vector2 snakePos)
         {
             this.snakePosition = snakePos;
             transform.position = new Vector3(snakePos.x, snakePos.y);
         }
 
-        public Vector2Int GetSnakePosition()
+        public Vector2 GetSnakePosition()
         {
             return snakePosition;
         }

@@ -9,26 +9,36 @@ public class Pathfinding : MonoBehaviour
 
     private void Awake()
     {
+        // Gets the NodeGrid component from current gameobject
         nGrid = GetComponent<NodeGrid>();
     }
 
     private void Update()
     {
+        // If no target is set..
         if (!target)
+            // Find the gameobject with tag of Food
             target = GameObject.FindGameObjectWithTag("Food").transform;
 
         FindPath(seeker.position, target.position);
     }
 
+    // Finds path between two points
     void FindPath(Vector2 startPos, Vector2 targetPos)
     {
+        // Gets the position of the start and end nodes from World Coordinates
         Node startNode = nGrid.NodeFromWorldPoint(startPos);
         Node targetNode = nGrid.NodeFromWorldPoint(targetPos);
 
+        // Create a list which will contain all available nodes
         List<Node> openSet = new List<Node>();
+        // Creates a hashset which will contain all of the path nodes
         HashSet<Node> closedSet = new HashSet<Node>();
+
+        // Adds the start node to the Open set
         openSet.Add(startNode);
 
+        // While the number of items in the open set is greater than 0..
         while(openSet.Count > 0)
         {
             Node currentNode = openSet[0];
@@ -71,19 +81,25 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    // Retraces path to back to the start so the path can be displayed
     void RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
 
+        // Iterates through each node whilst not at the start node
         while (currentNode != startNode)
         {
+            // Adds the current node to the path
             path.Add(currentNode);
+            // Makes the current node the parent of the previous 'current node'
             currentNode = currentNode.parent;
         }
 
+        // Flips the path so it goes the right way
         path.Reverse();
 
+        // Sets the path variable in NodeGrid to the path
         nGrid.path = path;
     }
 

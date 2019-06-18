@@ -5,7 +5,6 @@ using UnityEngine;
 public class SeekerMovement : MonoBehaviour
 {
     NodeGrid nodeGrid;
-    public SnakeController snake;
 
     public GameObject seeker;
     private Vector2 seekerPos;
@@ -26,7 +25,7 @@ public class SeekerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (nodeGrid.path != null && snake.isAIControlled)
+        if (nodeGrid.path != null)
         {
             if(nodeGrid.path.Count > 0)
             {

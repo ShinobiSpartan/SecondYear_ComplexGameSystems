@@ -451,10 +451,9 @@ GameObject:
   - component: {fileID: 1984814925}
   - component: {fileID: 1984814926}
   - component: {fileID: 1984814927}
-  - component: {fileID: 1984814928}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,17 +519,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeker: {fileID: 1197127024}
   target: {fileID: 0}
---- !u!114 &1984814928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984814923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e2ed5b0cf5cad4e9c71df7aa1b4043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  snake: {fileID: 1197127025}
-  seeker: {fileID: 1197127022}
