@@ -155,7 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e999d8d3a889549af979ba6d1b3fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headSprite: {fileID: 21300000, guid: 0ef1d9735665d7849afdc68d3ce045b2, type: 3}
   bodySprite: {fileID: 21300000, guid: ac7bc3aba1457e34db17e3067b3a1cb8, type: 3}
   foodSprite: {fileID: 21300000, guid: a01826ccb3ab99046b011fbc0ddd05b8, type: 3}
 --- !u!1 &1186094630
@@ -488,6 +487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snake: {fileID: 1197127025}
+  gridX: 20
+  gridY: 20
 --- !u!114 &1984814926
 MonoBehaviour:
   m_ObjectHideFlags: 0
