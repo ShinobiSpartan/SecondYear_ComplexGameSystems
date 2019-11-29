@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SeekerMovement : MonoBehaviour
 {
@@ -20,17 +22,16 @@ public class SeekerMovement : MonoBehaviour
 
         moveTimerMax = 0.15f;
         moveTimer = moveTimerMax;
-
     }
 
     private void Update()
     {
         if (nodeGrid.path != null)
         {
-            if(nodeGrid.path.Count > 0)
+            if (nodeGrid.path.Count > 0)
             {
                 moveTimer += Time.deltaTime;
-                if(moveTimer >= moveTimerMax)
+                if (moveTimer >= moveTimerMax)
                 {
                     if (seekerPos != nodeGrid.path[0].worldPosition)
                     {

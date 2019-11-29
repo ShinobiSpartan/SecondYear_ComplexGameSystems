@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SnakeController : MonoBehaviour
 { 
@@ -40,6 +42,12 @@ public class SnakeController : MonoBehaviour
     private NodeGrid nodeGrid;
     // Determines whether the Pathfinding player, or the User does
     public bool isAIControlled = false;
+
+    public int currentScore = 0;
+    public Text currentScoreText;
+
+    public float resetTimer;
+
 
     // Setup function for the Snake game and Food
     public void Setup(MapGrid mapGrid)
@@ -93,6 +101,8 @@ public class SnakeController : MonoBehaviour
 
     void Update()
     {
+        currentScoreText.text = currentScore.ToString();
+
         // User Controlled
         if (!isAIControlled)
         {
@@ -115,9 +125,10 @@ public class SnakeController : MonoBehaviour
                     SnakeAI();
                     break;
                 case State.Dead:
+                    SceneManager.LoadScene("Main");
                     break;
             }
-        }
+        }        
     }
 
     // Controls all of the input and directions for the Snake
@@ -235,6 +246,7 @@ public class SnakeController : MonoBehaviour
                         // If food is eaten, grow body
                         currentSnakeSize++;
                         CreateSnakeBodyPart();
+                        currentScore++;
                     }
 
                     // Once the the whole snake has moved past a position, remove that position from the list
@@ -256,6 +268,13 @@ public class SnakeController : MonoBehaviour
                     moveTimer -= moveTimerMax;
 
                 }
+            }
+            else
+            {
+                resetTimer += Time.deltaTime;
+
+                if (resetTimer >= 4f)
+                    SceneManager.LoadScene("Main");
             }
         }
     }

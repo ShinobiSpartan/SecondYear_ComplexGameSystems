@@ -17,10 +17,13 @@ public class Pathfinding : MonoBehaviour
     {
         // If no target is set..
         if (!target)
+        {
             // Find the gameobject with tag of Food
             target = GameObject.FindGameObjectWithTag("Food").transform;
+        }
+  
 
-        FindPath(seeker.position, target.position);
+        FindPath(seeker.position, target.position);        
     }
 
     // Finds path between two points
